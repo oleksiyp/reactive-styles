@@ -4,16 +4,23 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 public class ReactorJavaExample {
+    private Duration seconds(int i) {
+        return Duration.of(i, ChronoUnit.SECONDS);
+    }
+
     private Flux<String> dbCall1() {
-        return Flux.just("test1").delayElements(Duration.of(1, ChronoUnit.SECONDS));
+        return Flux.just("test1")
+                .delayElements(seconds(1));
     }
 
     private Flux<String> dbCall2() {
-        return Flux.just("test2").delayElements(Duration.of(2, ChronoUnit.SECONDS));
+        return Flux.just("test2")
+                .delayElements(seconds(2));
     }
 
     private Flux<String> dbCall3() {
-        return Flux.just("test3").delayElements(Duration.of(1, ChronoUnit.SECONDS));
+        return Flux.just("test3")
+                .delayElements(seconds(1));
     }
 
     Flux<String> restCall() {

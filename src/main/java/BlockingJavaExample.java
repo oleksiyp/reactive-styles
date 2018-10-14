@@ -1,29 +1,27 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class BlockingJavaExample {
-    private void dbCall1(Consumer<String> consumer) {
+    private String dbCall1() {
         sleep(1);
-        consumer.accept("test1");
+        return "test1";
     }
 
-    private void dbCall2(Consumer<String> consumer) {
+    private String dbCall2() {
         sleep(2);
-        consumer.accept("test2");
+        return "test2";
     }
 
-    private void dbCall3(Consumer<String> consumer) {
+    private String dbCall3() {
         sleep(1);
-        consumer.accept("test3");
+        return "test3";
     }
 
     void restCall(Consumer<String> consumer) throws InterruptedException {
         Thread thread1 = new Thread(() -> {
-            dbCall1(consumer);
+            consumer.accept(dbCall1());
         });
         Thread thread2 = new Thread(() -> {
-            dbCall2(consumer);
+            consumer.accept(dbCall2());
         });
 
         thread1.start();
@@ -32,7 +30,7 @@ public class BlockingJavaExample {
         thread1.join();
         thread2.join();
 
-        dbCall3(consumer);
+        consumer.accept(dbCall3());
     }
 
 
